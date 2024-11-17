@@ -19,22 +19,19 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $filters = $request->only(['q', 'itemsPerPage', 'sortBy']);
-
         return ProductResource::collection($this->productService->listProducts($filters));
     }
 
     public function store(StoreProductRequest $request)
     {
         $data = $request->validated();
-
-        return response()->json($this->productService->createProduct($data), 201);
+        return ProductResource::make($this->productService->createProduct($data));
     }
 
     public function update(UpdateProductRequest $request, $id)
     {
         $data = $request->validated();
-
-        return response()->json($this->productService->updateProduct($id, $data));
+        return ProductResource::make($this->productService->updateProduct($id, $data));
     }
 
     public function destroy($id)

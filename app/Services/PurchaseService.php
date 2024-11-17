@@ -23,8 +23,8 @@ class PurchaseService
         return $this->purchaseRepository->createPurchase($data);
     }
 
-    public function listPurchases()
+    public function  listPurchases(array $filters = [])
     {
-        return $this->purchaseRepository->listPurchases();
+        return $this->purchaseRepository->listPurchases($filters);
     }
 }

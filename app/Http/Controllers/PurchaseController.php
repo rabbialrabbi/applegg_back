@@ -4,16 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePurchaseRequest;
 use App\Http\Requests\UpdatePurchaseRequest;
+use App\Http\Resources\PurchaseResource;
 use App\Models\Purchase;
+use App\Services\PurchaseService;
+use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
 {
+
+    protected $purchaseService;
+
+    public function __construct(PurchaseService $purchaseService)
+    {
+        $this->purchaseService = $purchaseService;
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $filters = $request->only(['q', 'itemsPerPage', 'sortBy']);
+        return PurchaseResource::collection($this->purchaseService->listPurchases($filters));
     }
 
     /**

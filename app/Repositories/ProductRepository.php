@@ -26,7 +26,7 @@ class ProductRepository implements ProductRepositoryInterface
     {
 
         $itemPerPage = $filters['itemsPerPage']??10;
-        $query = Product::query();
+        $query = Product::with(['category']);
 
         if(!empty($filters['q'])){
             $key = $filters['q'];

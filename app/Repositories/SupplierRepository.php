@@ -19,16 +19,33 @@ class SupplierRepository implements SupplierRepositoryInterface
 
     public function delete(int $id)
     {
-        return Supplier::where('id', $id)->delete();
+        return Supplier::where('supplier_id', $id)->delete();
     }
 
     public function list(array $filters = [])
     {
+        $itemPerPage = $filters['itemsPerPage']??10;
+
         $query = Supplier::query();
 
-        if (!empty($filters['name'])) {
-            $query->where('name', 'like', '%' . $filters['name'] . '%');
+        if(!empty($filters['q'])){
+            $key = $filters['q'];
+            $query =  $query->where(function ($query) use ($key) {
+                $query->where('name', 'like', '%'.$key.'%');
+            })->orWhere(function ($query) use ($key) {
+                $query->where('email', 'like', '%'.$key.'%');
+            })->orWhere(function ($query) use ($key) {
+                $query->where('phone', 'like', '%'.$key.'%');
+            });
         }
-        return $query->paginate(10);
+
+        if (!empty($filters['sortBy'][0]) && !empty($filters['sortBy'][0]['key']) && !empty($filters['sortBy'][0]['order'])) {
+            $sortBy = $filters['sortBy'][0]['key'];
+            $orderBy = $filters['sortBy'][0]['order'];
+
+            $query->orderBy($sortBy, $orderBy);
+        }
+
+        return $query->paginate($itemPerPage);
     }
 }
