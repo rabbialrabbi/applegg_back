@@ -15,7 +15,7 @@ class PurchaseRepository implements PurchaseRepositoryInterface
                 'purchase_date' => $data['purchase_date'],
             ]);
 
-            foreach ($data['items'] as $item) {
+            foreach ($data['purchase_items'] as $item) {
                 $purchaseItem = new PurchaseItem([
                     'product_id' => $item['product_id'],
                     'quantity' => $item['quantity'],
@@ -41,7 +41,11 @@ class PurchaseRepository implements PurchaseRepositoryInterface
         if(!empty($filters['q'])){
             $key = $filters['q'];
             $query =  $query->where(function ($query) use ($key) {
-                $query->where('name', 'like', '%'.$key.'%');
+                $query->where('purchase_id', 'like', '%'.$key.'%');
+            })->orWhere(function ($query) use ($key) {
+                $query->where('total_amount', 'like', '%'.$key.'%');
+            })->orWhere(function ($query) use ($key) {
+                $query->where('purchase_date', 'like', '%'.$key.'%');
             })->orWhere(function ($query) use ($key) {
                 $query->whereHas('supplier',function ($query) use($key){
                     $query->where('name', 'like', '%'.$key.'%');

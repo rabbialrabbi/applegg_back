@@ -15,7 +15,7 @@ class PurchaseService
     public function createPurchase(array $data)
     {
         $totalAmount = 0;
-        foreach ($data['items'] as $item) {
+        foreach ($data['purchase_items'] as $item) {
             $totalAmount += $item['quantity'] * $item['unit_price'];
         }
         $data['total_amount'] = $totalAmount;

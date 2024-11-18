@@ -41,7 +41,8 @@ class PurchaseController extends Controller
      */
     public function store(StorePurchaseRequest $request)
     {
-        //
+        $data = $request->validated();
+        return PurchaseResource::make($this->purchaseService->createPurchase($data));
     }
 
     /**
