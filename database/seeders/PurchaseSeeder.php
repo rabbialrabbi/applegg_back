@@ -22,8 +22,10 @@ class PurchaseSeeder extends Seeder
             $date = Carbon::now()->subDays($i);
 
             for ($j = 1; $j <= 5; $j++){
+                $suppler = Supplier::inRandomOrder()->first();
                 $purchase = Purchase::create([
-                    'supplier_id' => Supplier::inRandomOrder()->first()->supplier_id,
+                    'supplier_id' => $suppler->supplier_id,
+                    'supplier_name' => $suppler->name,
                     'total_amount' => 0,
                     'purchase_date' => $date,
                 ]);
@@ -41,6 +43,7 @@ class PurchaseSeeder extends Seeder
                     PurchaseItem::create([
                         'purchase_id' => $purchase->purchase_id,
                         'product_id' => $product->product_id,
+                        'product_name' => $product->name,
                         'quantity' => $quantity,
                         'unit_price' =>$unitPrice,
                         'total_price' => $totalAmount,

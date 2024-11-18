@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
+use App\Models\Product;
+use App\Models\Purchase;
+use App\Models\Supplier;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 
@@ -38,6 +41,14 @@ class ProductController extends Controller
     {
         $this->productService->deleteProduct($id);
         return response()->json(null, 204);
+    }
+
+    public function desktopData()
+    {
+        $productCount = Product::count();
+        $supplierCount = Supplier::count();
+        $purchaseCount = Purchase::count();
+        return response()->json(['productCount' => $productCount, 'supplierCount' => $supplierCount, 'purchaseCount' => $purchaseCount]);
     }
 
 

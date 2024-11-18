@@ -13,6 +13,7 @@ class Purchase extends Model
     protected $primaryKey = 'purchase_id';
     protected $fillable = [
         'supplier_id',
+        'supplier_name',
         'total_amount',
         'purchase_date',
     ];

@@ -12,7 +12,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function update(int $id, array $data)
     {
-        $product = Product::where('product_id', $id);
+        $product = Product::findOrFail($id);
         $product->update($data);
         return $product;
     }

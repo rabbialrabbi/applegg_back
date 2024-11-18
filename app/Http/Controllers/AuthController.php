@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePurchaseRequest;
-use App\Http\Requests\UpdatePurchaseRequest;
-use App\Http\Resources\PurchaseResource;
-use App\Models\Purchase;
+use App\Http\Resources\UserResource;
 use App\Models\User;
-use App\Services\PurchaseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -25,8 +21,14 @@ class AuthController extends Controller
             ],401);
         }
         $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
+        return UserResource::make($user);
+    }
+
+    public function logout(){
+
+        auth()->user()->tokens()->delete();
         return response()->json([
-            'access_token' => $token,
+            "message"=>"logged out"
         ]);
     }
 

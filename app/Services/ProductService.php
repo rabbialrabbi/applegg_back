@@ -20,6 +20,7 @@ class ProductService
 
     public function updateProduct(int $id, array $data)
     {
+        $data['current_stock_quantity'] = $data['initial_stock_quantity'];
         return $this->productRepository->update($id, $data);
     }
 

@@ -16,6 +16,7 @@ Route::post('login',[AuthController::class,'login']);
 Route::post('logout',[AuthController::class,'logout'])->middleware('auth:sanctum');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/desktop-data', [ProductController::class, 'desktopData']);
     Route::prefix('products')->group(function () {
         Route::get('/', [ProductController::class, 'index']);
         Route::post('/', [ProductController::class, 'store']);
