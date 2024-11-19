@@ -20,7 +20,8 @@ This project is a web application that leverages Vue.js for the frontend and Lar
 - Provide necessary info about MySql Server in .env file
 - Run php artisan migrate command for database migration
 - Run php artisan db:seed for seed data (!!! Important as few data like category only available by seeding!!! )
-- Run php artisan server --port=8002 for server (By default front end will call in this port. for custom need to change in frontend .env file)
+- Run php artisan key:generate for app key
+- Run php artisan serve --port=8002 for server (By default front end will call in this port. for custom need to change in frontend .env file)
 
 ### Front end setup (Development)
 - [ Clone vue Project](https://github.com/rabbialrabbi/applegg_front)
