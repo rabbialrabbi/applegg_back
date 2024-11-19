@@ -20,7 +20,6 @@ class AuthController extends Controller
                 'message' => 'Invalid Credentials'
             ],401);
         }
-        $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
         return UserResource::make($user);
     }
 
